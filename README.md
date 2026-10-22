@@ -5,7 +5,11 @@ A small iPhone app that shows off smooth motion and very clear Liquid Glass.
 - **Cards** – tap a card and it zooms open full screen. Tap X (or swipe down) and it shrinks back into its spot. Cards squish when pressed and blur away as you scroll.
 - **+ button** – glass buttons melt out of it and back in.
 - **Glass** – drag a big glass drop over moving colours and words. Let go and it springs back.
-- **Settings** – switch glass between Clear and Regular, and choose how bouncy every animation is.
+- **Settings** – switches for everything:
+  - **Smooth motion** turns all animation on or off (off = instant), plus **Haptics**
+  - **Effects**: zoom open & close, squish when pressed, scroll effects, moving background
+  - **More**: extra smooth (slower, silkier), cards fly in, tilt with phone
+  - Glass look (Clear / Regular) and a Bounce slider
 
 Needs **iOS 26 or newer**.
 
