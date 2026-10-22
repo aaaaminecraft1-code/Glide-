@@ -1,0 +1,50 @@
+# Builds Glide.ipa on a free GitHub Mac every time you push (or when you press "Run workflow").
+# The .ipa is unsigned — Sideloadly signs it with your Apple ID when you install it.
+name: Build IPA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v5
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Create the Xcode project
+        run: xcodegen generate
+
+      - name: Build the app (unsigned)
+        run: |
+          xcodebuild \
+            -project Glide.xcodeproj \
+            -target Glide \
+            -configuration Release \
+            -sdk iphoneos \
+            SYMROOT="$PWD/build" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Pack it into an .ipa
+        run: |
+          mkdir -p Payload
+          cp -R build/Release-iphoneos/Glide.app Payload/
+          zip -qry Glide.ipa Payload
+          ls -lh Glide.ipa
+
+      - name: Upload the .ipa
+        uses: actions/upload-artifact@v6
+        with:
+          name: Glide-ipa
+          path: Glide.ipa
